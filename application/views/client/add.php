@@ -18,7 +18,8 @@
 
 <?php echo Form::open('',array(
                             'class'=>'form-horizontal',
-                            'role'=>'form'
+                            'role'=>'form',
+                            'id'=>'mineForm'
                             )) ?>
                  
                   <div class="form-group"> 
@@ -29,7 +30,8 @@
     
     <?php echo Form::input('number',"{$post['number']}",array(
                                                     'class'=>'form-control',
-                                                    'placeholder'=>'Client number'
+                                                    'placeholder'=>'Client number',
+                                                    'id'=>'number'
                                                     )) ?>
  
   </div>
@@ -43,7 +45,8 @@
     
     <?php echo Form::input('name',"{$post['name']}",array(
                                                     'class'=>'form-control',
-                                                    'placeholder'=>'Name'
+                                                    'placeholder'=>'Name',
+                                                    'id'=>'name'
                                                     )) ?>
  
   </div>
@@ -58,7 +61,8 @@
     
     <?php echo Form::input('last_name',"{$post['last_name']}",array(
                                                     'class'=>'form-control',
-                                                    'placeholder'=>'Last Name'
+                                                    'placeholder'=>'Last Name',
+                                                    'id'=>'last_name'
                                                     )) ?>
  
   </div>
@@ -75,7 +79,8 @@
     
     <?php echo Form::input('email',"{$post['email']}",array(
                                                     'class'=>'form-control',
-                                                    'placeholder'=>'Email'
+                                                    'placeholder'=>'Email',
+                                                    'id'=>'email'
                                                     )) ?>
  
   </div>
@@ -92,7 +97,8 @@
     
     <?php echo Form::input('adress',"{$post['adress']}",array(
                                                     'class'=>'form-control',
-                                                    'placeholder'=>'Adress'
+                                                    'placeholder'=>'Adress',
+                                                    'id'=>'adress'
                                                     )) ?>
  
   </div>
@@ -107,7 +113,8 @@
     
     <?php echo Form::input('city',"{$post['city']}",array(
                                                     'class'=>'form-control',
-                                                    'placeholder'=>'City'
+                                                    'placeholder'=>'City',
+                                                    'id'=>'city'
                                                     )) ?>
  
   </div>
@@ -122,7 +129,8 @@
     
     <?php echo Form::input('country',"{$post['country']}",array(
                                                     'class'=>'form-control',
-                                                    'placeholder'=>'Country'
+                                                    'placeholder'=>'Country',
+                                                    'id'=>'country'
                                                     )) ?>
  
   </div>
@@ -139,6 +147,7 @@
 
 <?php echo Form::close() ?>
 
+<script type="text/javascript" src="<?php echo URL::base(); ?>assets/js/validation.js"></script>
 
 
 

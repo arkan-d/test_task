@@ -26,7 +26,10 @@
 		<?= HTML::style('assets/css/theme.css'); ?>
 		
 		<script type="text/javascript" src="<?php echo URL::base(); ?>assets/js/jquery.min.js"></script>		
-       
+		
+		<!-- jquery validation plugin-->
+		
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.12.0/jquery.validate.min.js"></script>
 	       <!--  jquery plguin -->
 		<script src="<?php echo URL::base(); ?>assets/js/login.js"></script>
 		<script src="<?php echo URL::base(); ?>assets/js/modernizr.custom.js"></script>
