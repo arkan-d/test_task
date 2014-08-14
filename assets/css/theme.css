@@ -51,6 +51,14 @@ body{
 	text-decoration: none;
 	color: none;
 }
+
+
+.alert {
+   width:40%;
+   height: 50px;
+   
+}
+
 .header-bg{
 	background:#fff;
 	padding: 1% 0;

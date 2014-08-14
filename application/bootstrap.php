@@ -103,8 +103,12 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
-	'base_url'   => 'http://test1/',
+	//'base_url'   => 'http://test1/',
+	'base_url'   => 'http://test/',
+        'index_file'   => FALSE,
 ));
+
+Cookie::$salt = 'sd574ds';
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
@@ -126,9 +130,9 @@ Kohana::modules(array(
 	 'database'   => MODPATH.'database',   // Database access
 	// 'image'      => MODPATH.'image',      // Image manipulation
 	// 'minion'     => MODPATH.'minion',     // CLI Tasks
-	 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
+	// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
-	 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
+	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
 
 /**

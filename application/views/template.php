@@ -23,8 +23,9 @@
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 		<!----//webfonts---->
-		<link href="assets/css/theme.css" rel='stylesheet' type='text/css' />
-		<script type="text/javascript" src="assets/js/jquery.min.js"></script>		
+		<?= HTML::style('assets/css/theme.css'); ?>
+		
+		<script type="text/javascript" src="<?php echo URL::base(); ?>assets/js/jquery.min.js"></script>		
        
 	       <!--  jquery plguin -->
 		<script src="<?php echo URL::base(); ?>assets/js/login.js"></script>
@@ -100,12 +101,12 @@
 <div class="container">
 <div class="row">
 		<div class="content-feature-grids" id="features">
-						<h3> Features</h3>
-						<p>Lorem Ipsum is simply dummy text of the printing</p>
 						
 						
-			<?php echo isset($content) ? $content : '' ?>	
-						
+			
+			
+			
+			<?php echo isset($content)? $content :''; ?>			
 						
 						
 						
