@@ -46,6 +46,8 @@
 				
 				<?php endforeach; 
 				
+			}else {
+				echo "<h3>Here is no data</h3>";		
 			}
 			
 			?>	

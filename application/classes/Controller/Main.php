@@ -13,7 +13,12 @@ class Controller_Main extends Controller_Template {
 	private function _allClients(){
 		$this->template->title = 'Clients';
 	$clients = Model::factory('clients');
-	$all_clients = $clients->get_all_clients();        
+	
+	
+	$all_clients = $clients->get_all_clients(); 
+	if (!isset($all_clients )){
+		$all_clients = '';
+	}
 	
 	$view = new View('client/table');
 	$view->set('clients',$all_clients);
@@ -22,7 +27,7 @@ class Controller_Main extends Controller_Template {
 	}
 	
 	
-	private function _valid($post,$unique){
+	private function _valid($post){
 		
 		$clients = Model::factory('clients');
 		$object = Validation::factory($post);	
@@ -101,7 +106,7 @@ class Controller_Main extends Controller_Template {
 			$post[$value] = trim(htmlentities($key)); 
 		}
 		
-		$object = $this->_valid($post,FALSE);
+		$object = $this->_valid($post);
 		
 		if ($object->check())
 		{	
@@ -114,16 +119,13 @@ class Controller_Main extends Controller_Template {
 			catch (Exception $e) {
 			    echo $e->getMessage();
 			}
-		$this->redirect('main');
-		//$session = Session::instance();
-		//$session->set('test', 'Success!');
-		
+		$this->redirect('main');		
 		}else {
 		$errors = $object->errors('clients');
 		// Display the  form
 		$this->template->content = View::factory('client/add')
 		->bind('post', $post)
-		  ->bind('errors', $errors);
+		->bind('errors', $errors);
 		  
 		}
 		
@@ -160,7 +162,7 @@ class Controller_Main extends Controller_Template {
 			$post[$value] = trim(htmlentities($key)); 
 		}
 		
-		$object = $this->_valid($post,TRUE);
+		$object = $this->_valid($post);
 		
 		if ($object->check())
 		{	

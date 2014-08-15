@@ -40,9 +40,8 @@ Class Model_Clients extends Model
      *@param varchar country
      */
     public function add_client($array){
-        //$query = "call add_client(475,'name','last name','emil','adress','city','country')";
-        //DB::query(Database::SELECT, $query)->execute();
-        $procedure = 'add_client';
+        
+       
         $number = $array['number'];
         $name = $array['name'];
         $last_name = $array['last_name'];
@@ -53,7 +52,7 @@ Class Model_Clients extends Model
         
        
         $conn = Database::instance();       
-        $queryStr = "select * from add_client($number,'$name','$last_name','$email','$adress','$city','$country')";
+        $queryStr = "SELECT * FROM add_client($number,'$name','$last_name','$email','$adress','$city','$country')";
         $query = DB::query(Database::SELECT, $queryStr);
         return  $query->execute($conn);
        
@@ -82,7 +81,7 @@ Class Model_Clients extends Model
         $country = $array['country'];
         
         $conn = Database::instance();       
-        $queryStr = "select * from update_client($id,$number,'$name','$last_name','$email','$adress','$city','$country')";
+        $queryStr = "SELECT * FROM update_client($id,$number,'$name','$last_name','$email','$adress','$city','$country')";
         $query = DB::query(Database::SELECT, $queryStr);
         return  $query->execute($conn);
         
@@ -92,7 +91,7 @@ Class Model_Clients extends Model
      */
     public function one_client($id=''){
         $conn = Database::instance();       
-        $queryStr = "select * from get_client($id)";
+        $queryStr = "SELECT * FROM get_client($id)";
         $query = DB::query(Database::SELECT, $queryStr);
         return  $query->execute($conn)->as_array();
     }
@@ -103,13 +102,13 @@ Class Model_Clients extends Model
         
         
         $conn = Database::instance();       
-        $queryStr = "select * from del_client($id)";
+        $queryStr = "SELECT * FROM del_client($id)";
         $query = DB::query(Database::SELECT, $queryStr);
         return  $query->execute($conn);
         
     }
     
-    
+    /*this function DON'T use!!!!!!!!*/
     public static function unique_number($number)
     {
         // Check if the username already exists in the database

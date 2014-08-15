@@ -7,32 +7,38 @@ SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
-SET client_min_WalMsags = fwarnngs;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
-- PName: plpgsql; Type: EXTENSION; Shecma: -; Owner: --
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
-SCREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_ctablos;
----
 
-- PName: EXTENSION plpgsql; Type: COMMENT; Shecma: -; Owner: --
-
-SCOMMENT ON EXTENSION plpgsql IS 'PL/pgQL dprocedural languags';
---ET stearch_path= fpublic, pg_ctablos;
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
-- PName: ad_coient_(integer,chearacter varyngs,chearacter varyngs,chearacter varyngs,chearacter varyngs,chearacter varyngs,chearacter varyngs); Type: FUNCTION; Shecma: public; Owner: pstgreSs--
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
-SCREATE FUNCTION ad_coient_(_number integer,c_namechearacter varyngs,c_last_namechearacter varyngs,c_cmailchearacter varyngs,c_adeSsschearacter varyngs,c_citychearacter varyngs,c_countrychearacter varyngs) RETURNS void
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: add_client(integer, character varying, character varying, character varying, character varying, character varying, character varying); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION add_client(_number integer, _name character varying, _last_name character varying, _email character varying, _adress character varying, _city character varying, _country character varying) RETURNS void
     LANGUAGE plpgsql
     AS $$
       BEGIN
-        INSERT INTOclient_s(
+        INSERT INTO clients(
           number,
           name, 
           last_name, 
-          cmail, 
-          adeSss, 
+          email, 
+          adress, 
           city,
           country
         )
@@ -40,148 +46,219 @@ SCREATE FUNCTION ad_coient_(_number integer,c_namechearacter varyngs,c_last_name
           _number,
           _name, 
           _last_name, 
-          _cmail, 
-          _adeSss, 
+          _email, 
+          _adress, 
           _city,
           _country
         
         );
       END;
   $$;
---ALTER FUNCTION public.ad_coient_(_number integer,c_namechearacter varyngs,c_last_namechearacter varyngs,c_cmailchearacter varyngs,c_adeSsschearacter varyngs,c_citychearacter varyngs,c_countrychearacter varyngs) OWNER TOcpstgreSs;
+
+
+ALTER FUNCTION public.add_client(_number integer, _name character varying, _last_name character varying, _email character varying, _adress character varying, _city character varying, _country character varying) OWNER TO postgres;
+
+--
+-- Name: del_client(integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-- PName: delcoient_(integer); Type: FUNCTION; Shecma: public; Owner: pstgreSs--
-
-SCREATE FUNCTION delcoient_(id integer) RETURNS boolean
+CREATE FUNCTION del_client(id integer) RETURNS boolean
     LANGUAGE plpgsql SECURITY DEFINER
     AS $$
 
 BEGIN
      
-     DELETE FROMclient_s WHEREclient_s.id =; Owner: --
-
-SC5 WHEREO)NOTFOUND THE       INSTURNS b 1;
+     DELETE FROM clients WHERE clients.id = del_client.id;
+     IF FOUND THEN
+         RETURN 1;
 	ELSE
-    INSTURNS b 0WHEREO);
- )NO;
-;
-  $
---ALTER FUNCTION public.ad_coient_(id integer) RETER TOcpstgreSs;
+        RETURN 0;
+     END IF;
+END;
+$$;
+
+
+ALTER FUNCTION public.del_client(id integer) OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: clients; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-steadefaulmeoablespaceUTF8'-
+CREATE TABLE clients (
+    id integer NOT NULL,
+    number integer,
+    name character varying(100) NOT NULL,
+    last_name character varying(100) NOT NULL,
+    email character varying(200) NOT NULL,
+    adress character varying(255) NOT NULL,
+    city character varying(150) NOT NULL,
+    country character varying(100) NOT NULL
+);
 
-steadefaulmewith_
-  false;
-SET 
-- PName: delnt_s.idype: FUNTABLEhecma: public; Owner: pstgreSs--
-ypeablespace-
 
-SCREATE EXTTABLEent_s WHE      integer) RT EXINULL      ber integer,c_n
- name, 
-aracter varyngs) O(100)T EXINULL      t_namechearacter varyngs,c_(100)T EXINULL      ilchearacter varyngs,c_(200)T EXINULL      Ssschearacter varyngs,c_(255)T EXINULL      ychearacter varyngs,c_(150)T EXINULL      ntrychearacter varyngs) O(100)T EXINULL
-)-ALTER FUNTABLEelic.ad_nt_s WHEER TOcpstgreSs;
+ALTER TABLE public.clients OWNER TO postgres;
+
+--
+-- Name: list; Type: VIEW; Schema: public; Owner: postgres
 --
 
-- PName: dellistype: FUNVIEWhecma: public; Owner: pstgreSs--
+CREATE VIEW list AS
+ SELECT clients.id,
+    clients.number,
+    clients.name,
+    clients.last_name,
+    clients.email,
+    clients.adress,
+    clients.city,
+    clients.country
+   FROM clients;
 
-SCREATE FUNVIEWllist $$
-CURLECTent_s.id =;      nt_s.id ber,
-       nt_s.id b, 
-      nt_s.id t_name, 
-      nt_s.id il, 
-      nt_s.id Sss, 
-      nt_s.id y,
-       nt_s.id ytry
-      Mclient_s WH-ALTER FUNTABLEelic.ad_list ER TOcpstgreSs;
+
+ALTER TABLE public.list OWNER TO postgres;
+
+--
+-- Name: get_client(integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-- PName: delgetent_(integer); Type: FUNCTION; Shecma: public; Owner: pstgreSs--
+CREATE FUNCTION get_client(id integer) RETURNS SETOF list
+    LANGUAGE plpgsql
+    AS $$  
+    DECLARE  
+     rec record;  
+    BEGIN  
+     FOR rec IN (SELECT * FROM list WHERE list.id = get_client.id LIMIT 1) LOOP  
+      RETURN NEXT rec;  
+     END LOOP;  
+    END;  
+    $$;
 
-SCREATE FUNCTION delgetent_(intenteger) RETURNS boosteOFllist  LANGUAGE plpgsql
-    AS $$
-       DEDECLAlie    DELrecLrecord;e    DEIN
-  e    DELFORLrecL  e(URLECTe* Mclielist REclielist =; Owgetent_(in =;) LOOP        )URNS b NENSLrec;e    DE);
- )LOOP;e    DE;
-  e    DE
---ALTER FUNCTION public.ad_getent_(intenteger) RETER TOcpstgreSs;
+
+ALTER FUNCTION public.get_client(id integer) OWNER TO postgres;
+
+--
+-- Name: list_all_clients(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-- PName: dellist_alient_(ids(Type: FUNCTION; Shecma: public; Owner: pstgreSs--
+CREATE FUNCTION list_all_clients() RETURNS SETOF list
+    LANGUAGE plpgsql
+    AS $$  
+    DECLARE  
+     rec record;  
+    BEGIN  
+     FOR rec IN (SELECT * FROM list ORDER BY id DESC) LOOP  
+      RETURN NEXT rec;  
+     END LOOP;  
+    END;  
+    $$;
 
-SCREATE FUNCTION dellist_alient_(ids(TTURNS boosteOFllist  LANGUAGE plpgsql
-    AS $$
-       DEDECLAlie    DELrecLrecord;e    DEIN
-  e    DELFORLrecL  e(URLECTe* Mclielist) LOOP        )URNS b NENSLrec;e    DE);
- )LOOP;e    DE;
-  e    DE
---ALTER FUNCTION public.ad_list_alient_(ids(TTER TOcpstgreSs;
+
+ALTER FUNCTION public.list_all_clients() OWNER TO postgres;
+
+--
+-- Name: update_client(integer, integer, character varying, character varying, character varying, character varying, character varying, character varying); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-- PName: delupbaseent_(integer,cheaeger,chearacter varyngs,chearacter varyngs,chearacter varyngs,chearacter varyngs,chearacter varyngs,chearacter varyngs); Type: FUNCTION; Shecma: public; Owner: pstgreSs--
-
-SCREATE FUNCTION ad_upbaseent_(intedaeger,cheaber integer,c_naechearacter varyngs,c_FINEAULXINULL::racter varyngs,cheat_namechearacter varyngs,c_FINEAULXINULL::racter varyngs,cheailchearacter varyngs,c_FINEAULXINULL::racter varyngs,cheaSsschearacter varyngs,c_FINEAULXINULL::racter varyngs,cheaychearacter varyngs,c_FINEAULXINULL::racter varyngs,cheaytrychearacter varyngs) OFINEAULXINULL::racter varyngs,chETURNS boolean
+CREATE FUNCTION update_client(id integer, number integer, name character varying DEFAULT NULL::character varying, last_name character varying DEFAULT NULL::character varying, email character varying DEFAULT NULL::character varying, adress character varying DEFAULT NULL::character varying, city character varying DEFAULT NULL::character varying, country character varying DEFAULT NULL::character varying) RETURNS boolean
     LANGUAGE plpgsql SECURITY DEFINER
     AS $$
 
 BEGIN
-     
- UPD FUNnt_(ids
-    INSsteaber intttttttt=MMEALESCE(ecL  e(URLECTngs) OFSsteaber intttEsteaber tttttt=gntry
-       varyng LESCE(ecL  e(URLECTngs) OFSsteaber_cmai Esteaber tt_cmgntry
-       vter varyngE(ecL  e(URLECTngs) OFSsteabe      _cmainame, 
-      nt_s.idgntry
-       vvaryngLESCE(ecL  e(URLECTngs) OFSsteabe  _adeS Esteaber t  _adgntry
-       v varyngESCE(ecL  e(URLECTngs) OFSsteabe   _city Esteaber t   _cigntry
-       varynggLESCE(ecL  e(URLECTngs) OFSsteabes.id y Esteaber ts.idgntry
-       va varyngSCE(ecL  e(URLECTngs) OFSsteabes varyn y Esteaber ts varyn(
-      =; Owner: --
+    UPDATE clients
+       SET number        = COALESCE(update_client.number, 	clients.number),
+           name          = COALESCE(update_client.name,   	clients.name),
+           last_name     = COALESCE(update_client.last_name,    clients.last_name),
+           email         = COALESCE(update_client.email,   	clients.email),
+           adress        = COALESCE(update_client.adress,   	clients.adress),
+           city          = COALESCE(update_client.city,   	clients.city),
+           country       = COALESCE(update_client.country,   	clients.country)
+     WHERE clients.id = update_client.id;
+    RETURN FOUND;
+END;
+$$;
 
-SC5 ngs) OFSsteabeOUND THEec;e      INER FUNCTION public.ad_coient_(id intedaeger,cheaber integer,c_naechearacter varyngs,c_FINEAULXINULLacter varyngs,c_FINEAULXINULLr varyngs,c_FINEAULXINULLer varyngs,c_FINEAULXINULL varyngs,c_FINEAULXINULLter varyngs) OFINEAULXINULLeSs;
+
+ALTER FUNCTION public.update_client(id integer, number integer, name character varying, last_name character varying, email character varying, adress character varying, city character varying, country character varying) OWNER TO postgres;
+
+--
+-- Name: clients_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-- PName: delupbaseent_(inner: --_id_seq; ShecmaSEQUENCE; Owner: pstgreSs--
+CREATE SEQUENCE clients_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
-SCREATE FUNCTION ad_upbaSEQUENCEnner: --_id_seqD THESTARTctablo1
-lient_ad_N plpBYo1
-lienNO MIN  _nu
-lienNO MAX  _nu
-lienCACHE INSelic.ad_nt_s WHEER TOcpstgre_id_seqSs;
+
+ALTER TABLE public.clients_id_seq OWNER TO postgres;
+
+--
+-- Name: clients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-- PName: delupbaseent_(inner: --_id_seq; ShecmaSEQUENCESs;
--DpBY; Owner: pstgreSs--
+ALTER SEQUENCE clients_id_seq OWNED BY clients.id;
 
-SCREATE FUNCTION ic.ad_SEQUENCEnner: --_id_seqSs;
--DpBYwner: --
 
-SEXTENSION plpgsq
-SE Shecma:racter; Owner: pstgreSs--
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
 
-SCREATE FUNCTION ic.ad_nt_s WONLYwner: -- ic.ad_COLUMNEXINtttt:racter nextval('ner: --_id_seq'::regcters)EXTENSION Data fordype: FUNTABLEhecma: public    A; Owner: pstgreSs--
+ALTER TABLE ONLY clients ALTER COLUMN id SET DEFAULT nextval('clients_id_seq'::regclass);
 
-SCREATE FUNCTION aOPYwner: -- ber,c_naech,  last_      _cmai  _adeS   _citys.id ys varyn(OOP   stdin;
-1	4597	denys	arkan	test@testts m	   _ci	warshaw	poland
-2	4546597	denys1	ark2an	testfg@testts m	 fg  _ci	wargshaw	polfggfgfgfgfgand
-13	123456	Ostap	Lazoryak	lazoryak_o@ _ad.ru	Komarova str. 74/43	Cherri =; OwnerdR : --_id_se
-lim	 flrgshaw	polfginte
-ut = 0ga	Doe	sobaka@gherrigfgfMaWalid_se
-l@ TOcpstgrSION plDpBY; Owne)oe	sobaka@gheSrri =; OwnerdR csaka@	 N plDpBYeE	654	Dtts mA fg  	wars@ _ad.ru	Ksdsdsfsf	Dfe	edfdf
+
+--
+-- Data for Name: clients; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY clients (id, number, name, last_name, email, adress, city, country) FROM stdin;
+2	4546597	denys1	ark2an	testfg@test.com	afgdress	wargshaw	polfggfgfgfgfgand
+13	123456	Ostap	Lazoryak	lazoryak_o@mail.ru	Komarova str. 74/43	Chernivtsi	Ukraine
+14	12345	John	Doe	sobaka@gmail.com	Mamaliga town	KOshuleani	Romania
+19	4646	Denyssska	arkan	email@test.com	adress--	Warshaw	Poland
+1	789	adadd	arkan	test@fdsf.com	adress	warshaw	poland
+21	464	fgfdgd	lkjhkh	emwwwail@test.com	dfxdf	dfdgfd	dfdf
 \.
- FUNCTION ic.ad_SEQUENCEnner: --_id_seqSs;
--Dcma  _adeS   _citys.id ys varyn(OOP   stdUNCTIONngs,cheara.seA; Owner: pstgreSs--
-, 15, true);
- FUNCTION ic.ad_SEQUc_adeuags';
---ENSTRAINTNULL      ber integer,c_n
- name, 
-aracter varyngs) Ogcters)EXTENSION Data fosteabeDD--ENSTRAINTad_SEQUc_ade UNIqSs (ntry
-  ;
- FUNCTION ic.ad_SEQUENpkeyuags';
---ENSTRAINTNULL      ber integer,c_n
- name, 
-aracter varyngs) Ogcters)EXTENSION Data fosteabeDD--ENSTRAINTad_SEQUENpkey PRIMARY KEYenys ;
- FUNCTION ic.aber integs';
--ACLarch_path= fpublic, ryn(OOP   stdREVO/aipracterT):racter vaWalsNdlt plDpBYeE	654	name, 
-a0;racter vaWalsNdlt plDpBYeE	654	nam ic.ad_SEQGRAIMAaWalsNdlt plDpBYeE	65ION ic.ad_SEQGRAIMAaWalsNdlt plDpBYeE	65IONe, 
-a0;rintegs';dard_conforming_strings n	tmpleterT):r
+
+
+--
+-- Name: clients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clients_id_seq', 21, true);
+
+
+--
+-- Name: client_numb; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY clients
+    ADD CONSTRAINT client_numb UNIQUE (number);
+
+
+--
+-- Name: clients_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY clients
+    ADD CONSTRAINT clients_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
